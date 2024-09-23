@@ -75,15 +75,7 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
 
-    # Execute all unit tests in the solution
-    - name: Execute unit tests
-      run: dotnet test
 
-    - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Build
-      run: dotnet build --configuration ${{ matrix.configuration }} --no-restore
 
     - name: NUnit Tests
       working-directory: ICT3101_Calculator.UnitTests/
