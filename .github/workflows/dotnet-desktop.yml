@@ -72,7 +72,7 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: NUnit Tests
-      working-directory: svv_labs/ICT3101_Calculator.UnitTests/
+      working-directory: ICT3101_Calculator.UnitTests/
       run: dotnet test --no-build --verbosity normal
       
 
