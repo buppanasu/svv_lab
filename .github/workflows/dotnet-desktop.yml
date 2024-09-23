@@ -57,7 +57,7 @@ jobs:
 
     env:
       Solution_Name: svv_labs.sln                     # Replace with your solution name, i.e. MyWpfApp.sln.
-      Test_Project_Path: ICT3101_Calculator.UnitTests
+      Test_Project_Path: ICT3101_Calculator.UnitTests/
   
     steps:
     - name: Checkout
@@ -73,9 +73,15 @@ jobs:
 
 
 
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration ${{ matrix.configuration }} --no-restore
+
     - name: NUnit Tests
       working-directory: ICT3101_Calculator.UnitTests/
-      run: dotnet test ICT3101_Calculator.UnitTests.csproj --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal
 
     - name: SpecFlow Tests
       working-directory: Solution.SpecFlowCalculatorTests/
