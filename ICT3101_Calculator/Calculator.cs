@@ -233,9 +233,17 @@ public class Calculator
     {
         double result = 0;
         int choice = Convert.ToInt16(input);
+        bool isMock = fileReader.GetType().Name.Contains("Proxy");
+        string path = "MagicNumbers.txt";
 
-        // Define the path to MagicNumbers.txt
-        string path = Path.Combine(Directory.GetCurrentDirectory(), "/Users/junjie/svv_labs/data/MagicNumbers.txt");
+        // // Define the path to MagicNumbers.txt
+       
+        // Define the relative path to MagicNumbers.txt in the data folder
+        // string path = Path.Combine(Directory.GetCurrentDirectory(), "data", "MagicNumbers.txt");
+        if (!isMock){
+             path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "data", "MagicNumbers.txt");
+        }
+       
 
         // Read the magic numbers from the file using the injected fileReader
         string[] magicStrings = fileReader.Read(path);

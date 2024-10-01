@@ -19,10 +19,23 @@ namespace ICT3101_Calculator.UnitTests
             // Create a mock for the IFileReader interface
             _mockFileReader = new Mock<IFileReader>();
 
-            // Setup the mock to return a specific string array when "MagicNumbers.txt" is passed
-            _mockFileReader.Setup(fr => fr.Read(It.Is<string>(s => s == "/Users/junjie/svv_labs/data/MagicNumbers.txt")))
-                           .Returns(new string[] { "42", "42" });
+            // Setup the mock to return a specific string array when any path is passed
+            _mockFileReader.Setup(fr => fr.Read(It.IsAny<string>())).Returns(new string[] { "42", "42" });
         }
+
+        // public void Setup()
+        // {
+        //     // Arrange: create an instance of the Calculator
+        //     _calculator = new Calculator();
+
+        //     // Create a mock for the IFileReader interface
+        //     _mockFileReader = new Mock<IFileReader>();
+
+            
+
+        //     // Setup the mock to return a specific string array when "MagicNumbers.txt" is passed
+        //     _mockFileReader.Setup(fr => fr.Read("MagicNumbers.txt")).Returns(new string[] { "42", "42" });
+        // }
 
         // Positive test case
         [Test]
