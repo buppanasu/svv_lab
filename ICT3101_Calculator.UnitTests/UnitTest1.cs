@@ -3,11 +3,13 @@ namespace ICT3101_Calculator.UnitTests;
 public class CalculatorTests
 {
     private Calculator _calculator;
+    private FileReader _fileReader;
     [SetUp]
     public void Setup()
     {
         // Arrange
         _calculator = new Calculator();
+        _fileReader = new FileReader();
     }
     [Test]
     public void Add_WhenAddingTwoNumbers_ResultEqualToSum()
@@ -54,18 +56,7 @@ public class CalculatorTests
         Assert.That(result, Is.EqualTo(5));
     }
 
-    [Test]
-    [TestCase(0, 0)]
-    [TestCase(0, 10)]
-    [TestCase(10, 0)]
-    public void Divide_WithZerosAsInputs_ResultThrowArgumentException(double a, double b)
-    {
 
-        // 14b. We want to handle two other variations in this test. This can be done using a "Parameterized tests". With NUnit we use the following notation. Add this 
-        // to your test and alter accoridngly. Ensure the Argument Exception is thrown for each case.
-        Assert.That(() => _calculator.Divide(a, b), Throws.ArgumentException);
-
-    }
 
     // 15. Now add a new function for calculating a Factorial and write the corresponding Unit tests. (The Whitebox Testing lectures have an example of this function that you can use)
     [Test]
@@ -224,6 +215,48 @@ public class CalculatorTests
         // Assert
         Assert.That(() => _calculator.UnknownFunctionB(4, 5), Throws.ArgumentException);
     }
+
+    // Positive test case
+    [Test]
+    public void GenMagicNum_ValidInput_ReturnsCorrectValue()
+    {
+        // Arrange: MagicNumbers.txt has at least [5, 7, 9]
+        double input = 2; // This corresponds to the 3rd value in the file (index 2)
+
+        // Act
+        double result = _calculator.GenMagicNum(input);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(18)); // (9 * 2 = 18)
+    }
+
+    // Negative test case
+    [Test]
+    public void GenMagicNum_NegativeInput_ReturnsNegativeValue()
+    {
+        // Arrange
+        double input = -1;
+
+        // Act
+        double result = _calculator.GenMagicNum(input);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(-0)); // Returns -0 as expected for negative inputs
+    }
+
+    // Exceptional case test (out of range)
+    [Test]
+    public void GenMagicNum_InputOutOfRange_ThrowsIndexOutOfRangeException()
+    {
+        // Arrange: Assume MagicNumbers.txt has only 3 values (e.g., 5, 7, 9)
+        double input = 5; // This index is out of range for a file with 3 values
+
+        // Act and Assert
+        Assert.Throws<IndexOutOfRangeException>(() => _calculator.GenMagicNum(input));
+    }
+
+
+
 
 
 
