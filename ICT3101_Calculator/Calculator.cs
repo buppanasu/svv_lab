@@ -30,7 +30,7 @@ public class Calculator
                 break;
         }
         return result;
-        }
+    }
     public double Add(double num1, double num2)
     {
         if (num1 == 1 && num2 == 11)
@@ -73,13 +73,15 @@ public class Calculator
         return num1 / num2;
     }
 
-     // 15. Now add a new function for calculating a Factorial and write the corresponding Unit tests. (The Whitebox Testing lectures have an example of this function that you can use)
+    // 15. Now add a new function for calculating a Factorial and write the corresponding Unit tests. (The Whitebox Testing lectures have an example of this function that you can use)
     public double Factorial(double num1)
     {
-        if (num1 <0){
+        if (num1 < 0)
+        {
             throw new ArgumentException();
         }
-        else{
+        else
+        {
             double factorial = 1;
             for (double i = num1; i > 1; i--)
             {
@@ -89,49 +91,143 @@ public class Calculator
         }
     }
 
-        public double getTriangleArea(double height, double breadth)
+
+    // Function to calculate Mean Time Between Failures (MTBF)
+    public double MTBF(double mttf, double mttr)
+    {
+        return mttf + mttr;
+    }
+
+    // Function to calculate Availability
+    public double Availability(double mttf, double mttr)
+    {
+        double mtbf = mttf + mttr; // MTBF is the sum of MTTF and MTTR
+        if (mtbf == 0)
         {
-            if (height <= 0 || breadth <=0){
-                throw new ArgumentException();
-            }
-            else{
-                return (0.5 * height * breadth);
-            }
-
+            return 0; // Avoid division by zero, availability is 0 in this case
         }
+        return mttf / mtbf; // Availability = MTTF / MTBF
+    }
 
-        public double getCircleArea(double radius){
 
-            if (radius <= 0){
-                throw new ArgumentException();
-            }
-            else{
-                return Math.Round((Math.PI * radius * radius), 2);
-            }
-        }
-
-        public double UnknownFunctionA(double num1, double num2)
+    public double getTriangleArea(double height, double breadth)
+    {
+        if (height <= 0 || breadth <= 0)
         {
-            if (num1 < num2 || num1 < 0 || num2 < 0){
-                throw new ArgumentException();
-            }
-            else{
-
-                double num3 = Subtract(num1, num2);
-
-                return Divide(Factorial(num1), Factorial(num3));
-            }
+            throw new ArgumentException();
+        }
+        else
+        {
+            return (0.5 * height * breadth);
         }
 
-        public double UnknownFunctionB(double num1, double num2){
-            if (num1 < num2 || num1 < 0 || num2 < 0){
-                throw new ArgumentException();
-            }
-            else{
-                double num3 = Subtract(num1, num2);
-                double num4 = Multiply(Factorial(num3), Factorial(num2));
-                return Divide(Factorial(num1),num4);
-            }
+    }
+
+    public double getCircleArea(double radius)
+    {
+
+        if (radius <= 0)
+        {
+            throw new ArgumentException();
         }
+        else
+        {
+            return Math.Round((Math.PI * radius * radius), 2);
+        }
+    }
+
+    public double UnknownFunctionA(double num1, double num2)
+    {
+        if (num1 < num2 || num1 < 0 || num2 < 0)
+        {
+            throw new ArgumentException();
+        }
+        else
+        {
+
+            double num3 = Subtract(num1, num2);
+
+            return Divide(Factorial(num1), Factorial(num3));
+        }
+    }
+
+    public double UnknownFunctionB(double num1, double num2)
+    {
+        if (num1 < num2 || num1 < 0 || num2 < 0)
+        {
+            throw new ArgumentException();
+        }
+        else
+        {
+            double num3 = Subtract(num1, num2);
+            double num4 = Multiply(Factorial(num3), Factorial(num2));
+            return Divide(Factorial(num1), num4);
+        }
+    }
+
+        
+        public double BasicFailureIntensity(double lambda0, double mu, double v0)
+        {
+            if (v0 == 0)
+            {
+                throw new ArgumentException("v0 cannot be zero.");
+            }
+            
+            double result = lambda0 * (1 - (mu / v0));
+            
+            // Adding rounding for precision
+            return Math.Round(result, 3); // Round to 3 decimal places
+        }
+
+
+
+
+        public double BasicAverageFailures(double lambda0, double v0, double tau)
+        {
+            if (v0 == 0)
+            {
+                throw new ArgumentException("v0 cannot be zero.");
+            }
+            
+            double result = v0 * (1 - Math.Exp((-lambda0 * tau) / v0));
+            
+            // Adding rounding for more precision
+            return Math.Round(result, 2); // Round to 2 decimal places
+        }
+
+
+
+        // Function to calculate defect density
+        public double CalculateDefectDensity(int numberOfDefects, double size)
+        {
+            if (size == 0)
+            {
+                throw new ArgumentException("Size cannot be zero."); // Prevent division by zero
+            }
+            return numberOfDefects / size;
+        }
+
+        // Function to calculate the new total number of Shipped Source Instructions (SSI)
+        public double CalculateSSI(double ssiPrevious, double csi, double deletedCode, double changedCode)
+        {
+            return ssiPrevious + csi - deletedCode - changedCode;
+        }
+
+        // Function to calculate failure intensity λ(τ) using the Musa Logarithmic Model
+        public double CalculateFailureIntensity(double lambda0, double theta, double mu)
+        {
+            return lambda0 * Math.Exp(-theta * mu);
+        }
+
+                // Function to calculate expected number of failures μ(τ) using the Musa Logarithmic Model
+        public double CalculateExpectedFailures(double lambda0, double theta, double tau)
+        {
+            if (theta == 0)
+            {
+                throw new ArgumentException("Theta cannot be zero.");
+            }
+            return (1 / theta) * Math.Log(lambda0 * theta * tau + 1);
+        }
+
 
 }
