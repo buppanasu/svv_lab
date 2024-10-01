@@ -1,5 +1,5 @@
 namespace ICT3101_Calculator.UnitTests;
-
+using ICT3101_Calculator;
 public class CalculatorTests
 {
     private Calculator _calculator;
