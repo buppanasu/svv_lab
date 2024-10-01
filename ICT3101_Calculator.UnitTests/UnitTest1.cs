@@ -3,13 +3,13 @@ using ICT3101_Calculator;
 public class CalculatorTests
 {
     private Calculator _calculator;
-    private FileReader _fileReader;
+
     [SetUp]
     public void Setup()
     {
         // Arrange
         _calculator = new Calculator();
-        _fileReader = new FileReader();
+
     }
     [Test]
     public void Add_WhenAddingTwoNumbers_ResultEqualToSum()
@@ -216,6 +216,9 @@ public class CalculatorTests
         Assert.That(() => _calculator.UnknownFunctionB(4, 5), Throws.ArgumentException);
     }
 
+    // Arrange
+    IFileReader fileReader = new FileReader(); // Create an instance of FileReader
+
     // Positive test case
     [Test]
     public void GenMagicNum_ValidInput_ReturnsCorrectValue()
@@ -224,7 +227,7 @@ public class CalculatorTests
         double input = 2; // This corresponds to the 3rd value in the file (index 2)
 
         // Act
-        double result = _calculator.GenMagicNum(input);
+        double result = _calculator.GenMagicNum(input, fileReader);
 
         // Assert
         Assert.That(result, Is.EqualTo(18)); // (9 * 2 = 18)
@@ -238,7 +241,7 @@ public class CalculatorTests
         double input = -1;
 
         // Act
-        double result = _calculator.GenMagicNum(input);
+        double result = _calculator.GenMagicNum(input, fileReader);
 
         // Assert
         Assert.That(result, Is.EqualTo(-0)); // Returns -0 as expected for negative inputs
@@ -252,8 +255,9 @@ public class CalculatorTests
         double input = 5; // This index is out of range for a file with 3 values
 
         // Act and Assert
-        Assert.Throws<IndexOutOfRangeException>(() => _calculator.GenMagicNum(input));
+        Assert.Throws<IndexOutOfRangeException>(() => _calculator.GenMagicNum(input, fileReader));
     }
+
 
 
 
