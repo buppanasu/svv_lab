@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICT3101_Calculator", "ICT31
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICT3101_Calculator.UnitTests", "ICT3101_Calculator.UnitTests\ICT3101_Calculator.UnitTests.csproj", "{11695ADE-024A-4A68-B8BC-9795EE341073}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab4", "Lab4\Lab4.csproj", "{CE027C21-2BE2-4F62-B49F-3794B1E1B00D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{11695ADE-024A-4A68-B8BC-9795EE341073}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11695ADE-024A-4A68-B8BC-9795EE341073}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11695ADE-024A-4A68-B8BC-9795EE341073}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE027C21-2BE2-4F62-B49F-3794B1E1B00D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE027C21-2BE2-4F62-B49F-3794B1E1B00D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE027C21-2BE2-4F62-B49F-3794B1E1B00D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE027C21-2BE2-4F62-B49F-3794B1E1B00D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

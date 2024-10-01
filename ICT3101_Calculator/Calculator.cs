@@ -165,69 +165,106 @@ public class Calculator
         }
     }
 
-        
-        public double BasicFailureIntensity(double lambda0, double mu, double v0)
+
+    public double BasicFailureIntensity(double lambda0, double mu, double v0)
+    {
+        if (v0 == 0)
         {
-            if (v0 == 0)
-            {
-                throw new ArgumentException("v0 cannot be zero.");
-            }
-            
-            double result = lambda0 * (1 - (mu / v0));
-            
-            // Adding rounding for precision
-            return Math.Round(result, 3); // Round to 3 decimal places
+            throw new ArgumentException("v0 cannot be zero.");
         }
 
+        double result = lambda0 * (1 - (mu / v0));
+
+        // Adding rounding for precision
+        return Math.Round(result, 3); // Round to 3 decimal places
+    }
 
 
 
-        public double BasicAverageFailures(double lambda0, double v0, double tau)
+
+    public double BasicAverageFailures(double lambda0, double v0, double tau)
+    {
+        if (v0 == 0)
         {
-            if (v0 == 0)
-            {
-                throw new ArgumentException("v0 cannot be zero.");
-            }
-            
-            double result = v0 * (1 - Math.Exp((-lambda0 * tau) / v0));
-            
-            // Adding rounding for more precision
-            return Math.Round(result, 2); // Round to 2 decimal places
+            throw new ArgumentException("v0 cannot be zero.");
         }
 
+        double result = v0 * (1 - Math.Exp((-lambda0 * tau) / v0));
+
+        // Adding rounding for more precision
+        return Math.Round(result, 2); // Round to 2 decimal places
+    }
 
 
-        // Function to calculate defect density
-        public double CalculateDefectDensity(int numberOfDefects, double size)
+
+    // Function to calculate defect density
+    public double CalculateDefectDensity(int numberOfDefects, double size)
+    {
+        if (size == 0)
         {
-            if (size == 0)
-            {
-                throw new ArgumentException("Size cannot be zero."); // Prevent division by zero
-            }
-            return numberOfDefects / size;
+            throw new ArgumentException("Size cannot be zero."); // Prevent division by zero
+        }
+        return numberOfDefects / size;
+    }
+
+    // Function to calculate the new total number of Shipped Source Instructions (SSI)
+    public double CalculateSSI(double ssiPrevious, double csi, double deletedCode, double changedCode)
+    {
+        return ssiPrevious + csi - deletedCode - changedCode;
+    }
+
+    // Function to calculate failure intensity λ(τ) using the Musa Logarithmic Model
+    public double CalculateFailureIntensity(double lambda0, double theta, double mu)
+    {
+        return lambda0 * Math.Exp(-theta * mu);
+    }
+
+    // Function to calculate expected number of failures μ(τ) using the Musa Logarithmic Model
+    public double CalculateExpectedFailures(double lambda0, double theta, double tau)
+    {
+        if (theta == 0)
+        {
+            throw new ArgumentException("Theta cannot be zero.");
+        }
+        return (1 / theta) * Math.Log(lambda0 * theta * tau + 1);
+    }
+
+    public double GenMagicNum(double input, IFileReader fileReader)
+    {
+        double result = 0;
+        int choice = Convert.ToInt16(input);
+
+        // Define the path to MagicNumbers.txt
+        string path = Path.Combine(Directory.GetCurrentDirectory(), "/Users/junjie/svv_labs/data/MagicNumbers.txt");
+
+        // Read the magic numbers from the file using the injected fileReader
+        string[] magicStrings = fileReader.Read(path);
+
+        // Handle negative input by returning -0 as per the test case requirement
+        if (choice < 0)
+        {
+            return -0; // This is your specific test case requirement
         }
 
-        // Function to calculate the new total number of Shipped Source Instructions (SSI)
-        public double CalculateSSI(double ssiPrevious, double csi, double deletedCode, double changedCode)
+        // Throw an IndexOutOfRangeException if input is out of the valid range
+        if (choice >= magicStrings.Length)
         {
-            return ssiPrevious + csi - deletedCode - changedCode;
+            throw new IndexOutOfRangeException("Input is out of range.");
         }
 
-        // Function to calculate failure intensity λ(τ) using the Musa Logarithmic Model
-        public double CalculateFailureIntensity(double lambda0, double theta, double mu)
-        {
-            return lambda0 * Math.Exp(-theta * mu);
-        }
+        // Retrieve the number from the file
+        result = Convert.ToDouble(magicStrings[choice]);
 
-                // Function to calculate expected number of failures μ(τ) using the Musa Logarithmic Model
-        public double CalculateExpectedFailures(double lambda0, double theta, double tau)
-        {
-            if (theta == 0)
-            {
-                throw new ArgumentException("Theta cannot be zero.");
-            }
-            return (1 / theta) * Math.Log(lambda0 * theta * tau + 1);
-        }
+        // Apply transformation: double it if positive, negate and double if non-positive
+        result = (result > 0) ? (2 * result) : (-2 * result);
+
+        return result;
+    }
+
+
+
+
+
 
 
 }
